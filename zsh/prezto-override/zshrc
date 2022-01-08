@@ -1,0 +1,32 @@
+source $HOME/.zprezto/runcoms/zshrc
+
+for config_file ($HOME/.yadr/zsh/*.zsh) source $config_file
+    . $HOME/.asdf/asdf.sh
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit
+compinit
+plugins=(
+    git
+    bundler
+    dotenv
+    osx
+    rake
+    rbenv
+    ruby
+)
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte.sh
+fi
+if [ -n "${DISPLAY+x}" ]; then
+    xmodmap ~/.Xmodmap
+fi
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+alias k=kubectl
+#complete -F __start_kubectl k
